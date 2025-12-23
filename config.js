@@ -2,7 +2,7 @@
 //
 // SETUP INSTRUCTIONS:
 // 1. Create a Google Sheet with the following columns:
-//    Player | Matches Won | Matches Lost | Total Points | Win Rate
+//    Player | Matches Won | Matches Lost | Total Points | Win Rate | Cash Balance
 //
 // 2. Publish your sheet as CSV:
 //    - In Google Sheets, go to File > Share > Publish to web

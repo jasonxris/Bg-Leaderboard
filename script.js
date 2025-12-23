@@ -66,7 +66,8 @@ const app = {
                 matchesWon: parseInt(row[1]) || 0,
                 matchesLost: parseInt(row[2]) || 0,
                 totalPoints: parseInt(row[3]) || 0,
-                winRate: row[4] || '0%'
+                winRate: row[4] || '0%',
+                cashBalance: row[5] || '$0'
             };
         }).filter(player => player.player !== 'Unknown' && player.player.trim() !== '');
     },
@@ -114,6 +115,7 @@ const app = {
                 <td>${player.matchesLost}</td>
                 <td><strong>${player.totalPoints}</strong></td>
                 <td class="win-rate ${winRateClass}">${player.winRate}</td>
+                <td>${this.escapeHtml(player.cashBalance)}</td>
             `;
 
             tbody.appendChild(row);
