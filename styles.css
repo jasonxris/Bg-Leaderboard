@@ -87,6 +87,74 @@ h1 {
     border-left: 4px solid #c33;
 }
 
+.bank-balance {
+    background: linear-gradient(135deg, #1a472a 0%, #2d5016 50%, #1a472a 100%);
+    color: white;
+    padding: 50px 30px;
+    text-align: center;
+    border-bottom: 4px solid #FFD700;
+    box-shadow: inset 0 0 60px rgba(255, 215, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.bank-balance::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+.bank-balance-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.bank-balance-amount {
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+    position: relative;
+    z-index: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
 .last-updated {
     padding: 15px 30px;
     color: #666;
@@ -186,6 +254,19 @@ tbody tr:nth-child(3) td:first-child {
 
     header {
         padding: 20px;
+    }
+
+    .bank-balance {
+        padding: 35px 20px;
+    }
+
+    .bank-balance-label {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .bank-balance-amount {
+        font-size: 3.5rem;
     }
 
     .table-container {

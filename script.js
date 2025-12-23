@@ -61,13 +61,15 @@ const app = {
             // Simple CSV parsing - handles quoted fields
             const row = this.parseCSVLine(line);
 
+            const cashBalanceValue = row[5] ? row[5].trim() : '0';
+
             return {
                 player: row[0] || 'Unknown',
                 matchesWon: parseInt(row[1]) || 0,
                 matchesLost: parseInt(row[2]) || 0,
                 totalPoints: parseInt(row[3]) || 0,
                 winRate: row[4] || '0%',
-                cashBalance: row[5] || '$0'
+                cashBalance: cashBalanceValue || '0'
             };
         }).filter(player => player.player !== 'Unknown' && player.player.trim() !== '');
     },
@@ -120,6 +122,19 @@ const app = {
 
             tbody.appendChild(row);
         });
+
+        // Calculate and display bank balance
+        this.updateBankBalance(data);
+    },
+
+    updateBankBalance(data) {
+        const totalCashBalance = data.reduce((sum, player) => {
+            return sum + (parseFloat(player.cashBalance) || 0);
+        }, 0);
+
+        const bankBalance = 500 - totalCashBalance;
+        const bankBalanceEl = document.getElementById('bankBalanceAmount');
+        bankBalanceEl.textContent = `$${bankBalance.toFixed(2)}`;
     },
 
     getWinRateClass(winRate) {
