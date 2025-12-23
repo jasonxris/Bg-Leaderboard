@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BG Leaderboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 BG Leaderboard</h1>
+            <button id="refreshBtn" class="refresh-btn">🔄 Refresh Data</button>
+        </header>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading leaderboard data...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <div id="lastUpdated" class="last-updated"></div>
+
+        <div class="table-container">
+            <table id="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Matches Won</th>
+                        <th>Matches Lost</th>
+                        <th>Total Points</th>
+                        <th>Win Rate</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
