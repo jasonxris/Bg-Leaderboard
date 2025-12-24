@@ -155,6 +155,94 @@ h1 {
     }
 }
 
+.rules-section {
+    padding: 40px 30px;
+    background: #f8f9fa;
+}
+
+.rules-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #495057;
+    margin-bottom: 30px;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.rule-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.rule-card.earning {
+    border-top-color: #28a745;
+}
+
+.rule-card.bonuses {
+    border-top-color: #17a2b8;
+}
+
+.rule-card.bankers {
+    border-top-color: #ffc107;
+}
+
+.rule-card.important {
+    border-top-color: #dc3545;
+}
+
+.rule-icon {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.rule-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.rule-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rule-card li {
+    padding: 10px 0;
+    color: #495057;
+    font-size: 1rem;
+    line-height: 1.6;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.rule-card li:last-child {
+    border-bottom: none;
+}
+
+.rule-card strong {
+    color: #212529;
+    font-weight: 600;
+}
+
 .last-updated {
     padding: 15px 30px;
     color: #666;
@@ -267,6 +355,31 @@ tbody tr:nth-child(3) td:first-child {
 
     .bank-balance-amount {
         font-size: 3.5rem;
+    }
+
+    .rules-section {
+        padding: 30px 15px;
+    }
+
+    .rules-title {
+        font-size: 1.5rem;
+    }
+
+    .rules-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .rule-card {
+        padding: 20px;
+    }
+
+    .rule-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .rule-card li {
+        font-size: 0.95rem;
     }
 
     .table-container {
