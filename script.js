@@ -1,5 +1,9 @@
 // Main application logic
 const app = {
+    currentSort: 'matchesWon',
+    sortDirection: 'desc',
+    leaderboardData: [],
+
     init() {
         this.setupEventListeners();
         this.loadLeaderboard();
@@ -8,6 +12,14 @@ const app = {
     setupEventListeners() {
         const refreshBtn = document.getElementById('refreshBtn');
         refreshBtn.addEventListener('click', () => this.loadLeaderboard());
+
+        // Add sort listeners to table headers
+        document.querySelectorAll('th.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const sortKey = header.dataset.sort;
+                this.sortBy(sortKey);
+            });
+        });
     },
 
     async loadLeaderboard() {
@@ -16,7 +28,8 @@ const app = {
 
         try {
             const data = await this.fetchGoogleSheetData();
-            this.renderLeaderboard(data);
+            this.leaderboardData = data;
+            this.renderLeaderboard();
             this.updateLastRefreshedTime();
         } catch (error) {
             this.showError(error.message);
@@ -24,6 +37,19 @@ const app = {
         } finally {
             this.hideLoading();
         }
+    },
+
+    sortBy(key) {
+        // Toggle direction if clicking the same column
+        if (this.currentSort === key) {
+            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            this.currentSort = key;
+            this.sortDirection = 'desc'; // Default to descending for new column
+        }
+
+        this.renderLeaderboard();
+        this.updateSortIndicators();
     },
 
     async fetchGoogleSheetData() {
@@ -96,14 +122,41 @@ const app = {
         return result;
     },
 
-    renderLeaderboard(data) {
+    renderLeaderboard() {
         const tbody = document.getElementById('leaderboardBody');
         tbody.innerHTML = '';
 
-        // Sort by total points (descending)
-        data.sort((a, b) => b.totalPoints - a.totalPoints);
+        // Create a copy of data for sorting
+        const sortedData = [...this.leaderboardData];
 
-        data.forEach((player, index) => {
+        // Sort based on current sort key and direction
+        sortedData.sort((a, b) => {
+            let aVal = a[this.currentSort];
+            let bVal = b[this.currentSort];
+
+            // Handle different data types
+            if (this.currentSort === 'player') {
+                // String comparison
+                aVal = aVal.toLowerCase();
+                bVal = bVal.toLowerCase();
+                return this.sortDirection === 'asc'
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+            } else if (this.currentSort === 'winRate') {
+                // Parse percentage
+                aVal = parseFloat(aVal) || 0;
+                bVal = parseFloat(bVal) || 0;
+            } else if (this.currentSort === 'cashBalance') {
+                // Parse cash balance
+                aVal = parseFloat(aVal) || 0;
+                bVal = parseFloat(bVal) || 0;
+            }
+
+            // Numeric comparison
+            return this.sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+        });
+
+        sortedData.forEach((player, index) => {
             const row = document.createElement('tr');
 
             const rank = index + 1;
@@ -115,7 +168,6 @@ const app = {
                 <td class="player-name">${this.escapeHtml(player.player)}</td>
                 <td>${player.matchesWon}</td>
                 <td>${player.matchesLost}</td>
-                <td><strong>${player.totalPoints}</strong></td>
                 <td class="win-rate ${winRateClass}">${player.winRate}</td>
                 <td>${this.escapeHtml(player.cashBalance)}</td>
             `;
@@ -124,7 +176,24 @@ const app = {
         });
 
         // Calculate and display bank balance
-        this.updateBankBalance(data);
+        this.updateBankBalance(sortedData);
+    },
+
+    updateSortIndicators() {
+        // Remove active class and arrows from all headers
+        document.querySelectorAll('th.sortable').forEach(header => {
+            header.classList.remove('active');
+            const arrow = header.querySelector('.sort-arrow');
+            arrow.textContent = '';
+        });
+
+        // Add active class and arrow to current sort column
+        const activeHeader = document.querySelector(`th[data-sort="${this.currentSort}"]`);
+        if (activeHeader) {
+            activeHeader.classList.add('active');
+            const arrow = activeHeader.querySelector('.sort-arrow');
+            arrow.textContent = this.sortDirection === 'asc' ? '▲' : '▼';
+        }
     },
 
     updateBankBalance(data) {

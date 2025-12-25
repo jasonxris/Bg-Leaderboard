@@ -71,12 +71,11 @@
                 <thead>
                     <tr>
                         <th>Rank</th>
-                        <th>Player</th>
-                        <th>Matches Won</th>
-                        <th>Matches Lost</th>
-                        <th>Total Points</th>
-                        <th>Win Rate</th>
-                        <th>Cash Balance</th>
+                        <th class="sortable" data-sort="player">Player <span class="sort-arrow"></span></th>
+                        <th class="sortable active" data-sort="matchesWon">Matches Won <span class="sort-arrow">▼</span></th>
+                        <th class="sortable" data-sort="matchesLost">Matches Lost <span class="sort-arrow"></span></th>
+                        <th class="sortable" data-sort="winRate">Win Rate <span class="sort-arrow"></span></th>
+                        <th class="sortable" data-sort="cashBalance">Cash Balance <span class="sort-arrow"></span></th>
                     </tr>
                 </thead>
                 <tbody id="leaderboardBody">
